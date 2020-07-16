@@ -1,2 +1,2 @@
 # reserve-excess-capacity
-Gardener extension to reserve excess capacity in nodes
+Gardener extension to deploy reserve excess capacity pods in node pools.
