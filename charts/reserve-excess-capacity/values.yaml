@@ -1,0 +1,17 @@
+image:
+  name: pause-container
+  sourceRepository: github.com/kubernetes/kubernetes/blob/master/build/pause/Dockerfile
+  repository: gcr.io/google_containers/pause-amd64
+  tag: "3.1"
+  pullPolicy: IfNotPresent
+
+pools:
+  etcd:
+    podLabels:
+      app: etcd-statefulset
+      role: main
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 300m
+        memory: 1G

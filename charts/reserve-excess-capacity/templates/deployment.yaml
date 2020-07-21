@@ -1,0 +1,36 @@
+{{ $root := . }}
+{{ range $poolName, $pool := .Values.pools }}
+---
+apiVersion: {{ include "deploymentversion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "name" $poolName }}
+  namespace: {{ $root.Release.Namespace }}
+  labels:
+{{ include "label-name" $poolName | indent 4 }}
+{{ include "label-release" $root | indent 4 }}
+spec:
+  revisionHistoryLimit: 0
+  replicas: {{ $pool.replicasCount }}
+  selector:
+    matchLabels:
+{{ include "label-name" $poolName | indent 6 }}
+{{ include "label-release" $root | indent 6 }}
+{{ include "shallow-map" $pool.podLabels | indent 6 }}
+  template:
+    metadata:
+      labels:
+{{ include "label-name" $poolName | indent 8 }}
+{{ include "label-release" $root | indent 8 }}
+{{ include "shallow-map" $pool.podLabels | indent 8 }}
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: pause-container
+        image: {{ include "image" $root }}
+        imagePullPolicy: {{ $root.Values.image.pullPolicy }}
+        resources:
+          requests:
+{{ include "shallow-map" $pool.resources.requests | indent 12 }}
+      priorityClassName: {{ include "priority-class-name" $pool }}
+{{ end }}

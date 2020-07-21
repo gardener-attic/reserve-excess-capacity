@@ -1,0 +1,12 @@
+---
+apiVersion: core.gardener.cloud/v1beta1
+kind: ControllerRegistration
+metadata:
+  name: reserve-excess-capacity
+spec:
+  resources:
+  deployment:
+    type: helm
+    policy: Always
+    providerConfig:
+      chart: Cg==
