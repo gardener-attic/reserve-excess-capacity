@@ -22,12 +22,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 apps/v1
 {{- end -}}
 
-{{- define "shallow-map" -}}
-{{ range $key, $value := . -}}
-{{ $key }}: {{ $value }}
-{{ end -}}
-{{- end -}}
-
 {{- define "priority-class-name" -}}
 {{- if .priorityClassName -}}
 {{ .priorityClassName }}
