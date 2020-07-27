@@ -11,7 +11,7 @@ metadata:
 {{ include "label-release" $root | indent 4 }}
 spec:
   revisionHistoryLimit: 0
-  replicas: {{ $pool.replicasCount }}
+  replicas: {{ $pool.replicaCount }}
   selector:
     matchLabels:
 {{ include "label-name" $poolName | indent 6 }}
