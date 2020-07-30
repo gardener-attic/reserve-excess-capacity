@@ -7,9 +7,8 @@ image:
 
 pools:
   etcd:
-    podLabels:
-      app: etcd-statefulset
-      role: main
+    nodeLabels:
+      pool.worker.gardener.cloud/dedicated-for: etcd
     replicaCount: 1
     resources:
       requests:

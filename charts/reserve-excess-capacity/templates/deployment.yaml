@@ -16,13 +16,11 @@ spec:
     matchLabels:
 {{ include "label-name" $poolName | indent 6 }}
 {{ include "label-release" $root | indent 6 }}
-{{ toYaml $pool.podLabels | indent 6 }}
   template:
     metadata:
       labels:
 {{ include "label-name" $poolName | indent 8 }}
 {{ include "label-release" $root | indent 8 }}
-{{ toYaml $pool.podLabels | indent 8 }}
     spec:
       terminationGracePeriodSeconds: 5
       containers:
@@ -33,4 +31,23 @@ spec:
           requests:
 {{ toYaml $pool.resources.requests | indent 12 }}
       priorityClassName: {{ include "priority-class-name" $pool }}
+      {{- if $pool.nodeLabels }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+            {{- range $key, $value := $pool.nodeLabels }}
+              - key: {{ $key }}
+                operator: In
+                values: [ {{ $value | quote }} ]
+            {{- end }}
+      tolerations:
+      {{- range $key, $value := $pool.nodeLabels }}
+      - key: {{ $key }}
+        operator: Equal
+        value: {{ $value }}
+        effect: NoExecute
+      {{- end }}
+      {{- end }}
 {{ end }}
