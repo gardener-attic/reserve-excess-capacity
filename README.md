@@ -9,7 +9,7 @@ Reserve excess capacity `deployments` can be deployed for more than one node poo
 ```yaml
 pools:
   <pool-name>:
-    podLabels: #optional
+    nodeLabels: #optional
       ...
     replicaCount: 1
     resources:
@@ -20,13 +20,8 @@ pools:
 
 One reserve excess capacity [`Deployment`](charts/reserve-excess-capacity/templates/deployment.yaml) will generated per node pool in the following way.
 - `replicaCount` will be used in `spec.replicas`
-- `resources.requests` will be used in `spec.template.container[0].resources.requests`
-- `podLabels` (if supplied) will be used in the `spec.selector` and `spec.template.metadata.labels`
-
-### Note
-
-Please note that the chart [above](#helm-chart) doesn't add any affinity or tolerations in the `spec.template` of the generated reserve excess capacity `deployments`.
-That must be done separately using [gardener/kupid](https://github.com/gardener/kupid) and [gardener/cluster-pod-scheduling-policy](https://github.com/gardener/cluster-pod-scheduling-policy)
+- `resources.requests` will be used in `spec.template.spec.container[0].resources.requests`
+- `nodeLabels` (if supplied) will be used as `key` and `values` in `spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[*]` respectively (with `operator: In`) and as `key` and `value` in `spec.template.spec.tolerations[*]` respectively (with `operator: Equal` and `effect: NoExecute`). 
 
 ## `ControllerRegistration`
 
@@ -48,7 +43,7 @@ spec:
         ...
         pools:
           <pool-name>:
-            podLabels: #optional
+            nodeLabels: #optional
               ...
           replicaCount: 1
           resources:
