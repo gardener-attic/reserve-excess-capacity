@@ -11,10 +11,12 @@ reserve-excess-capacity:
   jobs:
     head-update:
       traits:
+        component_descriptor: ~
         draft_release: ~
     pull-request:
       traits:
         pull-request: ~
+        component_descriptor: ~
     release:
       traits:
         version:
