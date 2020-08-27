@@ -5,4 +5,4 @@ if [ -z "$SOURCE_PATH" ]; then
 fi
 ${ADD_DEPENDENCIES_CMD} \
   --container-image-dependencies \
-  '{"name": "pause-container", "image_reference": " gcr.io/google_containers/pause-amd64", "version": "$(cat ${SOURCE_PATH}/PAUSE_CONTAINER_VERSION)" }'
+  '{"name": "pause-container", "image_reference": "gcr.io/google_containers/pause-amd64:3.1", "version": "$(cat ${SOURCE_PATH}/PAUSE_CONTAINER_VERSION)" }'
