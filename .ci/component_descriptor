@@ -3,6 +3,8 @@ set -e
 if [ -z "$SOURCE_PATH" ]; then
   SOURCE_PATH="$(readlink -f $(dirname ${0})/..)"
 fi
+
+VERSION=$(cat "${SOURCE_PATH}/PAUSE_CONTAINER_VERSION")
 ${ADD_DEPENDENCIES_CMD} \
   --container-image-dependencies \
-  '{"name": "pause-container", "image_reference": "gcr.io/google_containers/pause-amd64:3.1", "version": "$(cat ${SOURCE_PATH}/PAUSE_CONTAINER_VERSION)" }'
+  "{ \"name\": \"pause-container\", \"image_reference\": \"gcr.io/google_containers/pause-amd64:3.1\", \"version\": \"$VERSION\" }"
