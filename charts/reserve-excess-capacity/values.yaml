@@ -2,7 +2,7 @@ image:
   name: pause-container
   sourceRepository: github.com/kubernetes/kubernetes/blob/master/build/pause/Dockerfile
   repository: gcr.io/google_containers/pause-amd64
-  tag: "3.1"
+  tag: "3.7"
   pullPolicy: IfNotPresent
 
 pools:
