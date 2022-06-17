@@ -7,6 +7,6 @@ fi
 VERSION=$(cat "${SOURCE_PATH}/PAUSE_CONTAINER_VERSION")
 ${ADD_DEPENDENCIES_CMD} \
   --container-image-dependencies \
-  "{ \"name\": \"pause-container\", \"image_reference\": \"gcr.io/google_containers/pause-amd64:3.1\", \"version\": \"$VERSION\" }"
+  "{ \"name\": \"pause-container\", \"image_reference\": \"k8s.gcr.io/pause:${VERSION}\", \"version\": \"$VERSION\" }"
 
 cp "${BASE_DEFINITION_PATH}" "${COMPONENT_DESCRIPTOR_PATH}"
